@@ -1,0 +1,18 @@
+Here, differences between each of the simulations are described using the Individual Fixation simulation as the baseline.
+
+Main Figures
+1)No Fixation. This simulation is exactly the same as the individual fixation simulation except that BNF_rate = 0 in the nutrient_constants.f90 file  
+
+2)Ecosystem Fixation. In this simulation,  individual level fixation is turned off by setting BNF rate = 0 in the nutrient_constants file. Instead, N enters the bioavailable soil N pool as a set value each day using the  BNF_input_today term in the soil_respiration.f90 file. The value used for BNF_input_today is the average daily BNF estimated for years 3-100  using the relationship described in Schimel et al. (1996) and comes from the simulation titled "EcosystemBNFcalculated" in the EcosystemFixation folder.  The first two years Fixation in the "EcosystemBNFcalculated"  simulation were omitted from the average because the year 1 was an artifact of the model initialization and year 2 was so small that there are rounding errors. 
+
+The EcosystemBNFcalculated simulation has code that has not been cleaned up so it might be harder to follow. This simulation was initiated exactly the same way as the individual fixation simulation except that Biological Nitrogen fixation is estimated using the relationship described in Schimel et al. (1996) in the soil_respiraiton.90 file. This relationship bases fixation input on evapotranspiration. For our model the initial annual evapotranspiration is initialized to 0 in the ed_type_init.f90 file and  the previous year's evapotranspiration is used to calculate the current year's fixation. BNF is added to the mineralized N pool each day in the soil_respiraiton.90 file. The fixation rate for the fixers = 0 (set in growth_balve.f90). 
+
+3)Fixer simulation. This simulation includes both Fixers (PFT 30) and Null-Fixer PFT  ((PFT35) types (compared to the plant community of early, mid, late, and fixer pfts  in the individual fixation simulation). The pfts included in the model are defined in ED2IN.BCImet and the starting density of the plant communities are adjusted in ed_params.f90 file to keep the initial forest density constant between simulations. 
+
+4)Null fixer simulation. This simulation only includes the null fixer PFT(a pft that is identical to the fixer pft but has a fixation rate = 0). To do this, the fixer pft is initialized as the only pft in the forest which is defined in ED2IN.BCImet and BNF rate is set to 0 in the nutrient_constants.f90 file. Additionally, the initial density of the fixer pft is changed in ed_params.f90 file to keep the initial forest density constant between simulations .
+
+Supplemental Figures
+5)Fertilization Experiment. To determine if nitrogen limits forest recovery even when the individual fixer PFT can fix nitrogen, we simulated forest recovery with ample bioavailable nitrogen. This simulation is initiated with high levels of soil N (10 kg N m-2for both the mineralized soil N pool and the fast decomposition soil N pool) in the ed_nbg_init.f90 file. To ensure that the fertilized simulation was nitrogen saturated, we turned off nitrogen losses from the system and did not allow dissolved organic nitrogen, dissolved inorganic nitrogen, or nitrogen gas to be lost from the ecosystem. The losses were turned off in the soil_respriation.f90 file by setting N_leached, N_loss_total, and interval_DON_loss to 0. 
+
+6)NoDisturbance_IndividualFixation. This simulation is exactly the same as the individual fixation simulation except that tree fall gap creation/disturbance is turned off by setting dist_start and dist_end to 0 in the nutrient_constants.f90 file.
+

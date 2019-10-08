@@ -1,0 +1,31 @@
+!  This is based off of Davidson et al. (2012) Global Change Biology Paper
+!-------------------------------------------------------------------------
+
+Module damm_model
+  implicit none
+
+  real, parameter :: enzyme_capacity=5.38e10 / 3600.
+  !Davidson refers to this as [alpha_Sx].  Davidson's value is:
+  !   5.38e10 (mg C) / (cm3 soil) / (hour)
+  !      Divide by 1e6 to get kg C.
+  !      Multiply by 1e6 to get m3 soil.
+  !      Divide by 3600 to get seconds.
+
+  real, parameter :: activation_energy = 72.26 * 1000. / 8.314
+  !Davidson refers to this as [Easx] in kJ / mol.
+  !   Here, we multiply by 1000 to get J/mol.
+  !   Then, divide by gas constant (8.314 J/mol/K) to get K.
+
+  
+
+Contains
+  
+  subroutine damm_reaction_velocity()
+    implicit none
+    
+    real :: Vmax
+    
+    return
+  end subroutine damm_reaction_velocity
+
+end Module damm_model
